@@ -1,5 +1,3 @@
-
-
 object Underjorden{
     var x = 0
     var y = 1
@@ -12,6 +10,6 @@ object Underjorden{
     object Masken{
         private var x = Mullvaden.x
         var y = Mullvaden.y + 190
-        def ärMullvadsmat: Boolean = 
+        def ärMullvadsmat: Boolean = x == Mullvaden.x && y == Mullvaden.y
     }
 }
