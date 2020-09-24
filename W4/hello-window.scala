@@ -3,7 +3,7 @@ package hello
 object Main {
     val w = new introprog.PixelWindow(400, 300, "HEJ")
 
-    var color = java.awt.color.red
+    var color = java.awt.Color.red
 
     def square(p: (Int, Int))(side: Int): Unit = if (side > 0) {
         val d = side - 1
