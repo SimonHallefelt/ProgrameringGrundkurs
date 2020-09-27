@@ -36,14 +36,14 @@ object Blockwindow {
         }
     }
 
-    val macWaitMillis = 10
+    val maxWaitMillis = 10
 
-    def waitForKey(): string = {
+    def waitForKey(): String = {
         window.awaitEvent(maxWaitMillis)
-        while (window.lastEventType != PixxelWindow.Event.KeyPressed) {
+        while (window.lastEventType != PixelWindow.Event.KeyPressed) {
             window.awaitEvent(maxWaitMillis)
         }
-        println(s"KeyPressed: " + window.lastkey)
+        println(s"KeyPressed: " + window.lastKey)
         window.lastKey
     }
 
@@ -58,10 +58,11 @@ object mole {
         while (!quit) {
             Blockwindow.block(x, y)(Color.mole)
             val key = Blockwindow.waitForKey()
-            if (key == "w") y -= y
-            else if (key == "a") x -= x
-            else if (key == "s") y += y
-            else if (key == "d") x += x
+            Blockwindow.block(x, y)(Color.tunnel)
+            if (key == "w") y -= 1
+            else if (key == "a") x -= 1
+            else if (key == "s") y += 1
+            else if (key == "d") x += 1
             else if (key == "q") quit = true
 
         }
@@ -83,16 +84,4 @@ object Main{
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
