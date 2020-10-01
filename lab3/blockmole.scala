@@ -9,6 +9,7 @@ object Color {
     val tunnel = new JColor(204, 153, 102)
     val grass = new JColor(25, 130, 35)
     val sky = new JColor(0, 0, 100)
+    val worm = new JColor(225, 100, 235)
 }
 
 object Blockwindow {
@@ -55,16 +56,66 @@ object mole {
         var x = Blockwindow.windowSize._1 / 2
         var y = Blockwindow.windowSize._2 / 2
         var quit = false
+
         while (!quit) {
+            if (x < 0){x = Blockwindow.windowSize._1 - 1}
+            else if (x >= Blockwindow.windowSize._1){x = 0}
+            else if (y < 10){y = 10}
+            else if (y >= Blockwindow.windowSize._2){y = Blockwindow.windowSize._2 - 1}
+
             Blockwindow.block(x, y)(Color.mole)
             val key = Blockwindow.waitForKey()
-            Blockwindow.block(x, y)(Color.tunnel)
+
+            if (y >= 20)Blockwindow.block(x, y)(Color.tunnel)
+            else Blockwindow.block(x, y)(Color.grass)
+
             if (key == "w") y -= 1
             else if (key == "a") x -= 1
             else if (key == "s") y += 1
             else if (key == "d") x += 1
-            else if (key == "q") quit = true
+            else if (key == "q") {quit = true; System.exit(1)}
 
+            if ((x, y) == Worm.pos) Worm.ärTagen = true
+            Worm.randomTeleport(x, y)
+        }
+    }
+}
+
+object Worm{
+    import Blockwindow.Pos
+
+    def nextRandomPos(): Pos = {
+        import scala.util.Random.nextInt
+        val x = nextInt(Blockwindow.windowSize._1)
+        val y = nextInt(Blockwindow.windowSize._2 - 10) + 10
+        (x, y)
+    }
+
+    var ärTagen = false
+    var poäng = 0
+
+    var pos = nextRandomPos()
+
+    def isHere(p: Pos): Boolean = pos == p
+
+    def draw(): Unit = Blockwindow.block(pos)(Color.worm)
+
+    def erase(): Unit = Blockwindow.block(pos)(Color.soil)
+
+    val teleportProbability = 0.02
+
+    def randomTeleport(notHere: Pos): Unit = {
+        if (ärTagen == true) {
+            poäng += 1
+            do pos = nextRandomPos() while (pos == notHere)
+            draw()
+            println(poäng)
+            ärTagen = false
+        }
+        else if (math.random() < Worm.teleportProbability) {
+            erase()
+            do pos = nextRandomPos() while (pos == notHere)
+            draw()
         }
     }
 }
@@ -75,12 +126,14 @@ object Main{
         Blockwindow.rektangel(0, 0)(Blockwindow.windowSize._1, 10)(Color.sky)
         Blockwindow.rektangel(0, 10)(Blockwindow.windowSize._1, 20)(Color.grass)
         Blockwindow.rektangel(0, 20)(Blockwindow.windowSize._1, Blockwindow.windowSize._2)(Color.soil)
+        Worm.draw()
 
     }
 
     def main(args: Array[String]): Unit = {
         drawWorld()
         mole.dig()
+        
     }
 
 }
