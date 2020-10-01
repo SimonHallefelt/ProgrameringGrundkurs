@@ -87,7 +87,7 @@ object Worm{
     def nextRandomPos(): Pos = {
         import scala.util.Random.nextInt
         val x = nextInt(Blockwindow.windowSize._1)
-        val y = nextInt(Blockwindow.windowSize._2 - 10) + 10
+        val y = nextInt(Blockwindow.windowSize._2 - 20) + 20
         (x, y)
     }
 
