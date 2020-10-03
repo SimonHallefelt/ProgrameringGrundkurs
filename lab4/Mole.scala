@@ -23,10 +23,15 @@ case class Mole(
         var diry = dir._2 * -1
         if (dirx == dir._1 * -1 || diry == dir._2 * -1){dir = (dirx, diry)}
     }
-
     def move(): Unit = {
-        
+        pos = pos.moved(dir)
+
     }
 
-//    def nextPos: Pos = {}
+    def nextPos: Pos = {
+        var posx = pos.x + dir._1
+        var posy = pos.y + dir._2
+        println("x = " + posx + "; y = " + posy)
+        Pos(pos.x, pos.y)
+    }
 }
