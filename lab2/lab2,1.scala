@@ -4,11 +4,12 @@ import scala.io.StdIn.readLine
 object lab2{
     def main(args: Array[String]): Unit= {
         println("välkommen till mattespelet")
-        var liv = 3
-        var poäng = 0
-
+        
         game
     }
+    
+    var poäng = 0
+    var liv = 3
 
     def game{
         var a = (math.random()*100).toInt
@@ -30,7 +31,7 @@ object lab2{
                 println(b + " - " + a)
             }
             if(svar == readLine.toInt){
-                println("corekt"); poäng = poäng + 1
+                println("corekt"); poäng += 1
                 if(poäng == 5){
                     println("du van!")
                 }
@@ -46,12 +47,12 @@ object lab2{
         
     }
 
-    var x = readLine()
-
-    try {
-        x.toInt
-    } catch NumberFormatException {
-
-    }
+//    var x = readLine()
+//
+//    try {
+//        x.toInt
+//    } catch NumberFormatException {
+//
+//    }
 
 }
