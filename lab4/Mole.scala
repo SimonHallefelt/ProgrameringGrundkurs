@@ -31,7 +31,6 @@ case class Mole(
     def nextPos: Pos = {
         var posx = pos.x + dir._1
         var posy = pos.y + dir._2
-        println("x = " + posx + "; y = " + posy)
-        Pos(pos.x, pos.y)
+        Pos(posx, posy)
     }
 }

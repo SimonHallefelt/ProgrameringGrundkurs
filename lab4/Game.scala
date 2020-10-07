@@ -70,16 +70,26 @@ class Game(
                     rightMole.setDir(key)
 
                 case BlockWindow.Event.WindowClosed =>
-                    ???
+                    System.exit(1)
             }
             e = window.nextEvent()
         }
     }
 
+    val moveInXRange = 0 to (windowSize._1 - 1)
+    val moveInYRange = 8 to (windowSize._2 - 1)
+
     def update(mole: Mole): Unit = {
-        window.setBlock(mole.pos, Color.tunnel)
-        mole.move()
-        window.setBlock(mole.pos, mole.color)
+        if (moveInXRange contains(mole.nextPos.x)) {
+            if (moveInYRange contains(mole.nextPos.y)){
+                window.setBlock(mole.nextPos, mole.color)
+                window.setBlock(mole.pos, Color.tunnel)
+                mole.move()
+            }
+            else mole.reverseDir()
+        }
+        else mole.reverseDir()
+        
     }
 
     var quit = false
