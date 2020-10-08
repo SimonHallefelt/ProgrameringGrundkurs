@@ -105,10 +105,10 @@ class Game(
             if (moveInYRange contains(mole.nextPos.y)){
                 if (window.getBlock(mole.nextPos) == Color.soil) {mole.points += 1}
                 else if (window.getBlock(mole.nextPos) == Color.grass) {mole.points += 2}
-                else if (window.getBlock(mole.nextPos) == Color.worm) {mole.points += 20; drawWorm(); println("1" + window.getBlock(worm1.pos) + Color.worm)}
-                else if (window.getBlock(mole.nextPos) == Color.worm) {mole.points += 20; drawWorm(); println("2")}
-                else if (window.getBlock(mole.nextPos) == Color.worm) {mole.points += 20; drawWorm(); println("3")}
-                else if (window.getBlock(mole.nextPos) == Color.worm) {mole.points += 20; drawWorm(); println("4")}
+                else if (window.getBlock(mole.nextPos) == Color.worm) {mole.points += 20}
+                else if (window.getBlock(mole.nextPos) == Color.worm) {mole.points += 20}
+                else if (window.getBlock(mole.nextPos) == Color.worm) {mole.points += 20}
+                else if (window.getBlock(mole.nextPos) == Color.worm) {mole.points += 20}
                 else {mole.points = mole.points}
                 window.setBlock(mole.nextPos, mole.color)
                 window.setBlock(mole.pos, Color.tunnel)
