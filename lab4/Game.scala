@@ -52,7 +52,22 @@ class Game(
                 window.setBlock(Pos(x, y), backgroundCollorAtDepth(y))
             }
         }
-        window.setBlock(Pos(15, 15), java.awt.Color.red)
+    }
+
+    val worm1 = new Worm
+    val worm2 = new Worm
+    val worm3 = new Worm
+    val worm4 = new Worm
+
+    def drawWorm(): Unit = {
+        if (window.getBlock(worm1.pos) == Color.worm) {}
+        else {window.setBlock(worm1.randomPos, Color.worm)}
+        if (window.getBlock(worm2.pos) == Color.worm) {}
+        else {window.setBlock(worm2.randomPos, Color.worm)}
+        if (window.getBlock(worm3.pos) == Color.worm) {}
+        else {window.setBlock(worm3.randomPos, Color.worm)}
+        if (window.getBlock(worm4.pos) == Color.worm) {}
+        else {window.setBlock(worm4.randomPos, Color.worm)}
     }
 
     def eraseBlocks(x1: Int, y1: Int, x2: Int, y2: Int): Unit = {
@@ -89,7 +104,11 @@ class Game(
         if (moveInXRange contains(mole.nextPos.x)) {
             if (moveInYRange contains(mole.nextPos.y)){
                 if (window.getBlock(mole.nextPos) == Color.soil) {mole.points += 1}
-                else if (window.getBlock(mole.nextPos) == Game.Color.grass) {mole.points += 2}
+                else if (window.getBlock(mole.nextPos) == Color.grass) {mole.points += 2}
+                else if (window.getBlock(mole.nextPos) == Color.worm) {mole.points += 20; drawWorm(); println("1" + window.getBlock(worm1.pos) + Color.worm)}
+                else if (window.getBlock(mole.nextPos) == Color.worm) {mole.points += 20; drawWorm(); println("2")}
+                else if (window.getBlock(mole.nextPos) == Color.worm) {mole.points += 20; drawWorm(); println("3")}
+                else if (window.getBlock(mole.nextPos) == Color.worm) {mole.points += 20; drawWorm(); println("4")}
                 else {mole.points = mole.points}
                 window.setBlock(mole.nextPos, mole.color)
                 window.setBlock(mole.pos, Color.tunnel)
@@ -117,12 +136,12 @@ class Game(
             update(leftMole)
             update(rightMole)
 
-            if (leftMole.points >= 50) {
+            if (leftMole.points >= 200) {
                 quit = true
                 window.write(text = ("GAME OVER"), pos = Pos(1, windowSize._2 / 2 - 4), color = Color.black, textSize = 5 * blockSize)
                 window.write(text = (leftMole.name + " WIN"), pos = Pos(7, windowSize._2 / 2 + 1), color = Color.black, textSize = 3 * blockSize)
             }
-            else if (rightMole.points >= 50) {
+            else if (rightMole.points >= 200) {
                 quit = true
                 window.write(text = ("GAME OVER"), pos = Pos(1, windowSize._2 / 2 - 4), color = Color.black, textSize = 5 * blockSize)
                 window.write(text = (rightMole.name + " WIN"), pos = Pos(7, windowSize._2 / 2 + 1), color = Color.black, textSize = 3 * blockSize)
@@ -138,6 +157,7 @@ class Game(
         println(s"$leftPlayerName ${leftMole.keyControl}")
         println(s"$rightPlayerName ${rightMole.keyControl}")
         drawWorld()
+        drawWorm()
         gameLoop()
     }
 }
