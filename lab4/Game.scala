@@ -82,6 +82,9 @@ class Game(
     def update(mole: Mole): Unit = {
         if (moveInXRange contains(mole.nextPos.x)) {
             if (moveInYRange contains(mole.nextPos.y)){
+                if (window.getBlock(mole.nextPos) == Color.soil) {mole.points += 1; println(mole.name + ": " + mole.points)}
+                else if (window.getBlock(mole.nextPos) == Game.Color.grass) {mole.points += 2; println(mole.name + ": " + mole.points)}
+                else {mole.points = mole.points}
                 window.setBlock(mole.nextPos, mole.color)
                 window.setBlock(mole.pos, Color.tunnel)
                 mole.move()

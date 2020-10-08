@@ -17,7 +17,7 @@ case class BlockWindow(
     }
 
     def getBlock(pos: Pos): java.awt.Color = {
-        pixelWindow.getPixel(pos.x, pos.y)
+        pixelWindow.getPixel(pos.x * blockSize, pos.y * blockSize)
     }
 
     def write(
