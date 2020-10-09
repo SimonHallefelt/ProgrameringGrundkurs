@@ -53,11 +53,12 @@ class Game(
             }
         }
     }
-
     val worm1 = new Worm
     val worm2 = new Worm
     val worm3 = new Worm
     val worm4 = new Worm
+    val wormName = Vector(worm1, worm2, worm3, worm4)
+    
 
     def drawWorm(): Unit = {
         if (worm1.pos == worm2.pos || worm1.pos == worm3.pos || worm1.pos == worm4.pos) {worm1.randomPos; drawWorm()}
@@ -83,14 +84,14 @@ class Game(
     }
 
     def wormRandomMoved: Unit = {
-        worm1.randomMove
-        worm2.randomMove
-        worm3.randomMove
-        worm4.randomMove
-        if (worm1.pos != worm1.gammalPos) {window.setBlock(worm1.gammalPos, Color.soil); drawWorm()}
-        if (worm2.pos != worm2.gammalPos) {window.setBlock(worm2.gammalPos, Color.soil); drawWorm()}
-        if (worm3.pos != worm3.gammalPos) {window.setBlock(worm3.gammalPos, Color.soil); drawWorm()}
-        if (worm4.pos != worm4.gammalPos) {window.setBlock(worm4.gammalPos, Color.soil); drawWorm()}
+        wormName.map(_.randomMove)
+        wormName.map(updateWormPos(_))
+    }
+
+    def updateWormPos(worm: Worm) = {
+        if (worm.pos != worm.gammalPos) {
+            window.setBlock(worm.gammalPos, Color.soil); drawWorm()
+        }
     }
 
     def eraseBlocks(x1: Int, y1: Int, x2: Int, y2: Int): Unit = {
