@@ -61,26 +61,22 @@ class Game(
 
     def drawWorm(): Unit = {
         if (worm1.pos == worm2.pos || worm1.pos == worm3.pos || worm1.pos == worm4.pos) {worm1.randomPos; drawWorm()}
-        else if (window.getBlock(worm1.pos) == Color.worm) {}
-        else {
+        else if(window.getBlock(worm1.pos) != Color.worm) {
             if (window.getBlock(worm1.randomPos) == Color.worm) drawWorm()
             else window.setBlock(worm1.pos, Color.worm)
         }
         if (worm2.pos == worm1.pos || worm2.pos == worm3.pos || worm2.pos == worm4.pos) {worm2.randomPos; drawWorm()}
-        else if (window.getBlock(worm2.pos) == Color.worm) {}
-        else {
+        else if(window.getBlock(worm2.pos) != Color.worm) {
             if (window.getBlock(worm2.randomPos) == Color.worm) drawWorm()
             else window.setBlock(worm2.pos, Color.worm)
         }
         if (worm3.pos == worm2.pos || worm3.pos == worm1.pos || worm3.pos == worm4.pos) {worm3.randomPos; drawWorm()}
-        else if (window.getBlock(worm3.pos) == Color.worm) {}
-        else {
+        else if(window.getBlock(worm3.pos) != Color.worm) {
             if (window.getBlock(worm3.randomPos) == Color.worm) drawWorm()
             else window.setBlock(worm3.pos, Color.worm)
         }
         if (worm4.pos == worm2.pos || worm4.pos == worm3.pos || worm4.pos == worm1.pos) {worm4.randomPos; drawWorm()}
-        else if (window.getBlock(worm4.pos) == Color.worm) {}
-        else {
+        else if(window.getBlock(worm4.pos) != Color.worm) {
             if (window.getBlock(worm4.randomPos) == Color.worm) drawWorm()
             else window.setBlock(worm4.pos, Color.worm)
         }
@@ -115,7 +111,7 @@ class Game(
                 }
 
                 case BlockWindow.Event.WindowClosed => {
-                    System.exit(1)
+                    quit = true
                 }
             }
             e = window.nextEvent()
@@ -125,6 +121,7 @@ class Game(
     val moveInXRange = 0 to (windowSize._1 - 1)
     val moveInYRange = 8 to (windowSize._2 - 1)
     var poängpos = Pos(0, 0)
+    val winCondition = 300
 
     def update(mole: Mole): Unit = {
         val pointsAtStart = mole.points
@@ -138,7 +135,7 @@ class Game(
                 window.setBlock(mole.pos, Color.tunnel)
                 mole.move()
                 drawWorm()
-                wormRandomMoved
+                
             }
             else mole.reverseDir()
         }
@@ -150,28 +147,24 @@ class Game(
             eraseBlocks(poängpos.x + 3, poängpos.y - 1, poängpos.x + 6, poängpos.y + 1)
             window.write(text = (mole.name + ": " + mole.points), pos = poängpos, color = Color.black)    
         }
+
+        if (mole.points >= winCondition) {
+            quit = true
+            window.write(text = ("GAME OVER"), pos = Pos(1, windowSize._2 / 2 - 4), color = Color.black, textSize = 5 * blockSize)
+            window.write(text = (mole.name + " WIN"), pos = Pos(7, windowSize._2 / 2 + 1), color = Color.black, textSize = 3 * blockSize)
+        }
     }
 
     var quit = false
-    val delayMillis = 200
+    val delayMillis = 80
 
     def gameLoop(): Unit = {
         while(!quit) {
             val t0 = System.currentTimeMillis
             handleEvents()
+            wormRandomMoved
             update(leftMole)
             update(rightMole)
-
-            if (leftMole.points >= 400) {
-                quit = true
-                window.write(text = ("GAME OVER"), pos = Pos(1, windowSize._2 / 2 - 4), color = Color.black, textSize = 5 * blockSize)
-                window.write(text = (leftMole.name + " WIN"), pos = Pos(7, windowSize._2 / 2 + 1), color = Color.black, textSize = 3 * blockSize)
-            }
-            else if (rightMole.points >= 400) {
-                quit = true
-                window.write(text = ("GAME OVER"), pos = Pos(1, windowSize._2 / 2 - 4), color = Color.black, textSize = 5 * blockSize)
-                window.write(text = (rightMole.name + " WIN"), pos = Pos(7, windowSize._2 / 2 + 1), color = Color.black, textSize = 3 * blockSize)
-            }
 
             val elapsedMillis = (System.currentTimeMillis - t0).toInt
             Thread.sleep((delayMillis - elapsedMillis) max 0)
