@@ -21,7 +21,7 @@ case class Mole(
     def reverseDir(): Unit = {
         var dirx = dir._1 * -1
         var diry = dir._2 * -1
-        if (dirx == dir._1 * -1 || diry == dir._2 * -1){dir = (dirx, diry)}
+        dir = (dirx, diry)
     }
     def move(): Unit = {
         pos = pos.moved(dir)
