@@ -60,14 +60,41 @@ class Game(
     val worm4 = new Worm
 
     def drawWorm(): Unit = {
-        if (window.getBlock(worm1.pos) == Color.worm) {}
-        else {window.setBlock(worm1.randomPos, Color.worm)}
-        if (window.getBlock(worm2.pos) == Color.worm) {}
-        else {window.setBlock(worm2.randomPos, Color.worm)}
-        if (window.getBlock(worm3.pos) == Color.worm) {}
-        else {window.setBlock(worm3.randomPos, Color.worm)}
-        if (window.getBlock(worm4.pos) == Color.worm) {}
-        else {window.setBlock(worm4.randomPos, Color.worm)}
+        if (worm1.pos == worm2.pos || worm1.pos == worm3.pos || worm1.pos == worm4.pos) {worm1.randomPos; drawWorm()}
+        else if (window.getBlock(worm1.pos) == Color.worm) {}
+        else {
+            if (window.getBlock(worm1.randomPos) == Color.worm) drawWorm()
+            else window.setBlock(worm1.pos, Color.worm)
+        }
+        if (worm2.pos == worm1.pos || worm2.pos == worm3.pos || worm2.pos == worm4.pos) {worm2.randomPos; drawWorm()}
+        else if (window.getBlock(worm2.pos) == Color.worm) {}
+        else {
+            if (window.getBlock(worm2.randomPos) == Color.worm) drawWorm()
+            else window.setBlock(worm2.pos, Color.worm)
+        }
+        if (worm3.pos == worm2.pos || worm3.pos == worm1.pos || worm3.pos == worm4.pos) {worm3.randomPos; drawWorm()}
+        else if (window.getBlock(worm3.pos) == Color.worm) {}
+        else {
+            if (window.getBlock(worm3.randomPos) == Color.worm) drawWorm()
+            else window.setBlock(worm3.pos, Color.worm)
+        }
+        if (worm4.pos == worm2.pos || worm4.pos == worm3.pos || worm4.pos == worm1.pos) {worm4.randomPos; drawWorm()}
+        else if (window.getBlock(worm4.pos) == Color.worm) {}
+        else {
+            if (window.getBlock(worm4.randomPos) == Color.worm) drawWorm()
+            else window.setBlock(worm4.pos, Color.worm)
+        }
+    }
+
+    def wormRandomMoved: Unit = {
+        worm1.randomMove
+        worm2.randomMove
+        worm3.randomMove
+        worm4.randomMove
+        if (worm1.pos != worm1.gammalPos) {window.setBlock(worm1.gammalPos, Color.soil); drawWorm()}
+        if (worm2.pos != worm2.gammalPos) {window.setBlock(worm2.gammalPos, Color.soil); drawWorm()}
+        if (worm3.pos != worm3.gammalPos) {window.setBlock(worm3.gammalPos, Color.soil); drawWorm()}
+        if (worm4.pos != worm4.gammalPos) {window.setBlock(worm4.gammalPos, Color.soil); drawWorm()}
     }
 
     def eraseBlocks(x1: Int, y1: Int, x2: Int, y2: Int): Unit = {
@@ -113,6 +140,8 @@ class Game(
                 window.setBlock(mole.nextPos, mole.color)
                 window.setBlock(mole.pos, Color.tunnel)
                 mole.move()
+                drawWorm()
+                wormRandomMoved
             }
             else mole.reverseDir()
         }
@@ -136,12 +165,12 @@ class Game(
             update(leftMole)
             update(rightMole)
 
-            if (leftMole.points >= 200) {
+            if (leftMole.points >= 400) {
                 quit = true
                 window.write(text = ("GAME OVER"), pos = Pos(1, windowSize._2 / 2 - 4), color = Color.black, textSize = 5 * blockSize)
                 window.write(text = (leftMole.name + " WIN"), pos = Pos(7, windowSize._2 / 2 + 1), color = Color.black, textSize = 3 * blockSize)
             }
-            else if (rightMole.points >= 200) {
+            else if (rightMole.points >= 400) {
                 quit = true
                 window.write(text = ("GAME OVER"), pos = Pos(1, windowSize._2 / 2 - 4), color = Color.black, textSize = 5 * blockSize)
                 window.write(text = (rightMole.name + " WIN"), pos = Pos(7, windowSize._2 / 2 + 1), color = Color.black, textSize = 3 * blockSize)

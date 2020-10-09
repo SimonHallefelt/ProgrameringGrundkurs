@@ -1,7 +1,8 @@
 package blockbattle
 
 case class Worm(
-    var pos: Pos = Pos(0, 0)
+    var pos: Pos = Pos(0, 0),
+    var gammalPos: Pos = Pos(0, 0)
 ){
 
     def randomPos: Pos = {
@@ -10,5 +11,11 @@ case class Worm(
         pos = Pos(posx, posy)
         Pos(posx, posy)
 
+    }
+    def randomMove: Unit = {
+        gammalPos = Pos(pos.x, pos.y)
+        if (math.random() < 0.02) {
+            randomPos
+        }
     }
 }
