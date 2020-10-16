@@ -20,14 +20,20 @@ class Deck private (val initCards: Vector[Card]){
 
   /** Swaps cards at position a and b. */
   def swap(a: Int, b: Int): Unit = {
-    val c = peek(a)
-    a = peek(b)
-    b = peek(c)
+    val c = cards(a)
+    cards(a) = cards(b)
+    cards(b) = c
   }
 
   /** Randomly reorders the cards in this deck. */
   def shuffle(): Unit = {
-    for(i <- 1 to 100) swap((math.random*51).toInt,(math.random*51).toInt)
+    var n = cards.length
+    val range = 0 to n-1
+    for(i <- range.reverse){
+      val r = scala.util.Random.nextInt(i+1)
+      swap(i, r)
+    }
+
   }
 }
 object Deck {
@@ -37,8 +43,8 @@ object Deck {
   /** Creates a new full Deck with 52 cards in rank and suit order. */
   def full(): Deck = {
     var cards = Vector[Card]()
-    for(r <- Card.rankRange){
-      for(s <- Card.suitRange){
+    for(s <- Card.suitRange){
+      for(r <- Card.rankRange){
         cards = cards :+ Card(r, s)
       }
     }
