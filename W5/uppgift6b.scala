@@ -1,0 +1,1 @@
+def insert(xs : Array[Int], elem: Int, pos: Int): Array[Int] = {xs.patch(pos, Vector(elem), 0)}
