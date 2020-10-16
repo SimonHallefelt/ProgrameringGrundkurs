@@ -8,16 +8,13 @@ case class Hand(cards: Vector[Card]) {
    * cards of that rank. Position 0 contains 0.
    */
   def tally: Vector[Int] = {
-    var myCards = Vector.fill(14)(0)
+    val myCards = Array.fill(14)(0)
       for(i <- Card.rankRange){
-        var xs = for (x <- 0 to cards.length-1 if cards(x).rank == i) yield x
-        if (xs.length > 0){
-          
+        for (x <- 0 to cards.length-1 if cards(x).rank == i) {
+          myCards(i) += 1
         }
-        
       }
-    myCards
-
+    myCards.toVector
   }
   def ranksSorted: Vector[Int] = cards.map(_.rank).sorted.toVector
 
