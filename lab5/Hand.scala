@@ -7,8 +7,18 @@ case class Hand(cards: Vector[Card]) {
    * A vector of length 14 with positions 1-13 containing the number of
    * cards of that rank. Position 0 contains 0.
    */
-  def tally: Vector[Int] = ???
+  def tally: Vector[Int] = {
+    var myCards = Vector.fill(14)(0)
+      for(i <- Card.rankRange){
+        var xs = for (x <- 0 to cards.length-1 if cards(x).rank == i) yield x
+        if (xs.length > 0){
+          
+        }
+        
+      }
+    myCards
 
+  }
   def ranksSorted: Vector[Int] = cards.map(_.rank).sorted.toVector
 
   def isFlush: Boolean = cards.length > 0 && cards.forall(_.suit == cards(0).suit)
