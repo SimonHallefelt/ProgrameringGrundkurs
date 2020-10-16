@@ -1,10 +1,9 @@
 lab3/blockmole
 .metals
 .vscode
-lab4/project
-lab4/target
-lab4/.bsp
+project
+target
+.bsp
 lab2/lab2.class
 lab2/lab2$.class
-lab5/project
-lab5/target
+
