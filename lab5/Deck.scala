@@ -19,15 +19,30 @@ class Deck private (val initCards: Vector[Card]){
   def prepend(moreCards: Card*): Unit = cards = moreCards.toArray ++ cards
 
   /** Swaps cards at position a and b. */
-  def swap(a: Int, b: Int): Unit = ???
+  def swap(a: Int, b: Int): Unit = {
+    val c = peek(a)
+    a = peek(b)
+    b = peek(c)
+  }
 
   /** Randomly reorders the cards in this deck. */
-  def shuffle(): Unit = ???
+  def shuffle(): Unit = {
+    for(i <- 1 to 100) swap((math.random*51).toInt,(math.random*51).toInt)
+  }
 }
 object Deck {
   def empty: Deck = new Deck(Vector())
   def apply(cards: Seq[Card]): Deck = new Deck(cards.toVector)
 
   /** Creates a new full Deck with 52 cards in rank and suit order. */
-  def full(): Deck = ???
+  def full(): Deck = {
+    var cards = Vector[Card]()
+    for(r <- Card.rankRange){
+      for(s <- Card.suitRange){
+        cards = cards :+ Card(r, s)
+      }
+    }
+    val nyDeck = new Deck(cards)
+    nyDeck
+  }
 }
