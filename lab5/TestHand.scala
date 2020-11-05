@@ -38,8 +38,8 @@ object TestHand {
             Vector(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
   }
 
-  def main(args: Array[String]): Unit = {
-    testCategorize()
-    testTally()
-  }
+  //def main(args: Array[String]): Unit = {
+    //testCategorize()
+    //testTally()
+  //}
 }

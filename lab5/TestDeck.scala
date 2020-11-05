@@ -26,10 +26,10 @@ object TestDeck {
       .mkString("\n")
     println(s"\n$listingOfPercentages")
   }
-/**
-  def main(args: Array[String]): Unit = {
-    testCreate()
-    testShuffle()
-  }
-*/
+
+  //def main(args: Array[String]): Unit = {
+    //testCreate()
+    //testShuffle()
+  //}
+
 }

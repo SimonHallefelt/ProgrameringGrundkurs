@@ -1,12 +1,20 @@
 package cards
-/**
+
 object PokerProbability {
 
   /**
    * For a given number of iterations, shuffles a deck, draws a hand and
    * returns a vector with the frequency of each hand category.
    */
-  def register(n: Int, deck: Deck): Vector[Int] = ???
+  def register(n: Int, deck: Deck): Vector[Int] = {
+    var frequencies = Array.fill(10)(0)
+    for(i <- 1 to n){
+      deck.shuffle()
+      Hand.from(deck).category
+      frequencies(Hand.from(deck).category) += 1
+    }
+    frequencies.toVector
+  }
 
   def main(args: Array[String]): Unit = {
     val n = scala.io.StdIn.readLine("number of iterations: ").toInt
@@ -19,4 +27,3 @@ object PokerProbability {
     }
   }
 }
-*/
