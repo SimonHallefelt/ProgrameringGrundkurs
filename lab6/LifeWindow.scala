@@ -13,8 +13,8 @@ object LifeWindow {
         val pink  = new JColor(242, 128, 161)
         val white = new JColor(252,252,252)
     }
-
 }
+
 
 class LifeWindow(rows: Int, cols: Int){
     import LifeWindow._
@@ -36,7 +36,6 @@ class LifeWindow(rows: Int, cols: Int){
 
     def drawCell(row: Int, col: Int): Unit = {
         var a = Color.black
-        //println(life(row,col))
         if(life(row, col) == true){a = Color.pink} 
         else{a = Color.black}
         window.fill(row * blockSize + 1, col * blockSize + 1, blockSize - 1, blockSize - 1, a)
@@ -50,16 +49,21 @@ class LifeWindow(rows: Int, cols: Int){
         }
     }
 
-    def handleKey(key: String): Unit = ???
+    def handleKey(key: String): Unit = {
+        //println(key)
+        if(key == "Enter") update(life.evolved())
+        else if(key == " "){if(play == false){play = true} else{play = false}; println(play)}
+        else if(key == "r"){life = Life.random((rows, cols)); drawGrid()}
+        else if(key == "Backspace"){life = Life.empty(rows, cols); drawGrid()}
+        else println("Not a registerd key")
+    }
 
     def handleClick(pos: (Int, Int)): Unit = {
-        //println(pos._1 / blockSize, pos._2 / blockSize)
         life = life.toggled(pos._1 / blockSize, pos._2 / blockSize)
         drawCell(pos._1 / blockSize, pos._2 / blockSize)
     }
 
     def loopUntilQuit(): Unit = while (!quit) {
-        //println("hej på dej")  //ska ta bort senare
         val t0 = System.currentTimeMillis
         if (play) update(life.evolved())
         window.awaitEvent(EventMaxWait)
