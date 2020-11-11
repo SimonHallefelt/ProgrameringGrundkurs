@@ -21,12 +21,12 @@ class LifeWindow(rows: Int, cols: Int){
 
     var life = Life.empty(rows, cols)
     val blockSize = 30
-    val window: PixelWindow = new PixelWindow(rows * blockSize, cols * blockSize, "Life")
+    val window: PixelWindow = new PixelWindow(rows * blockSize + 1, cols * blockSize + 1, "Life")
     var quit = false
     var play = false
 
     def drawGrid(): Unit = {
-        window.fill(0, 0, rows * blockSize, cols * blockSize, Color.white)
+        window.fill(0, 0, rows * blockSize + 1, cols * blockSize + 1, Color.white)
         for(i <- 0 until rows){
             for(j <- 0 until cols){
                 drawCell(i, j)
@@ -53,10 +53,13 @@ class LifeWindow(rows: Int, cols: Int){
     def handleKey(key: String): Unit = ???
 
     def handleClick(pos: (Int, Int)): Unit = {
-        life.toggled(pos._1 / blockSize, pos._2 / blockSize)
+        //println(pos._1 / blockSize, pos._2 / blockSize)
+        life = life.toggled(pos._1 / blockSize, pos._2 / blockSize)
+        drawCell(pos._1 / blockSize, pos._2 / blockSize)
     }
 
     def loopUntilQuit(): Unit = while (!quit) {
+        //println("hej på dej")  //ska ta bort senare
         val t0 = System.currentTimeMillis
         if (play) update(life.evolved())
         window.awaitEvent(EventMaxWait)
