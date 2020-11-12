@@ -45,14 +45,14 @@ class LifeWindow(rows: Int, cols: Int){
         val oldLife = life
         life = newLife
         life.cells.foreachIndex{
-            ???
+            (r, c) => if(oldLife(r, c) != life(r, c)){drawCell(r, c)}
         }
     }
 
     def handleKey(key: String): Unit = {
         //println(key)
         if(key == "Enter") update(life.evolved())
-        else if(key == " "){if(play == false){play = true} else{play = false}; println(play)}
+        else if(key == " "){if(play == false){play = true} else{play = false}}
         else if(key == "r"){life = Life.random((rows, cols)); drawGrid()}
         else if(key == "Backspace"){life = Life.empty(rows, cols); drawGrid()}
         else println("Not a registerd key")

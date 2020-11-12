@@ -24,13 +24,20 @@ case class Life(cells: Matrix[Boolean]) {
         nbr
     }
 
+    /** Skapar en ny Life-instans med nästa generation av universum.
+     * Detta sker genom att applicera funktionen \code(rule) på cellerna
+     */
     def evolved(rule: (Int, Int, Life) => Boolean = Life.defaultRule): Life = {
         var nextGeneration = Life.empty(cells.dim)
         cells.foreachIndex { 
-            (r,c) => ???//Life.defaultRule(r, c, Life)
+            (r,c) => nextGeneration = nextGeneration.updated(r, c, rule(r, c, this))
         }
         nextGeneration
     }
+
+//  def foreachIndex(f: (Int, Int) => Unit): Unit = {                 ska raderas
+//      for(i <- data.indices; c <- data(i).indices)f(i,c)            ska raderas
+//  }                                                                 ska raderas
     
     override def toString = {
         cells.data.map(xs => xs.map(cell => if (cell) "0" else "-").mkString("")).mkString("\n")
