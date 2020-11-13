@@ -1,7 +1,7 @@
 package nlp
 
 case class Text(source: String){
-  lazy val words: Vector[String] = source.split(" ").toVector  // dela upp source i ord
+  lazy val words: Vector[String] = source.toLowerCase.map(c => if (c.isLetter) c else ' ').split("\\s+").toVector  // dela upp source i ord
 
   lazy val distinct: Vector[String] = words.distinct
 
@@ -9,14 +9,22 @@ case class Text(source: String){
 
   lazy val wordsOfLength: Map[Int, Set[String]] = wordSet.groupBy(_.length)
 
-  lazy val wordFreq: Map[String, Int] = ???  // använd FreqMapBuilder
+  lazy val wordFreq: Map[String, Int] = FreqMapBuilder(words:_*).toMap  // använd FreqMapBuilder
 
-  def ngrams(n: Int): Vector[Vector[String]] = ???  // använd sliding
+  def ngrams(n: Int): Vector[Vector[String]] = words.sliding(n).toVector  // använd sliding
+ 
+  lazy val bigrams: Vector[(String, String)] = ngrams(2).map(xs => (xs(0), xs(1)))
 
-  lazy val bigrams: Vector[(String, String)] =
-    ngrams(2).map(xs => (xs(0), xs(1)))
+  lazy val followFreq: Map[String, Map[String, Int]] = {
+    val resultat = scala.collection.mutable.Map.empty[String, FreqMapBuilder]
+    for((key, next) <- bigrams){
+      if(key == resultat(key)){}
 
-  lazy val followFreq: Map[String, Map[String, Int]] = ??? //nästlad tabell
+      else {}
+
+    }
+    resultat.map(p => p._1 -> p._2.toMap).toMap
+  } //nästlad tabell
 
   lazy val follows: Map[String, String] = {
     followFreq.map { case (key, followMap) => 
