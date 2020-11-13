@@ -10,7 +10,6 @@ object PokerProbability {
     var frequencies = Array.fill(10)(0)
     for(i <- 1 to n){
       deck.shuffle()
-      Hand.from(deck).category
       frequencies(Hand.from(deck).category) += 1
     }
     frequencies.toVector

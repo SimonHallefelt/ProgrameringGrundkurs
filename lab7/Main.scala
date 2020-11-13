@@ -4,7 +4,10 @@ object Main {
   val defaultUrl = "https://fileadmin.cs.lth.se/pgk/skattkammaron.txt"
   val defaultN = 10
 
-  def top(n: Int, freqMap: Map[String, Int]): Vector[(String, Int)] = ???
+  def top(n: Int, freqMap: Map[String, Int]): Vector[(String, Int)] = {
+    //freqMap.toVector.map(p => (p._2, p._1)).sorted.reverse.map(p => (p._2, p._1)).take(n)
+    freqMap.toVector.sortBy(_._2).reverse.take(n)
+  }
 
   def report(text: Text, from: String, n: Int): String = {
     val longestWordsWithLength =

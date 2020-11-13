@@ -8,12 +8,14 @@ case class Life(cells: Matrix[Boolean]) {
     }
 
     def updated(row: Int, col: Int, value: Boolean): Life = {
-        Life(Matrix(cells.data.updated(row, cells.data(row).updated(col, value))))
+        //Life(Matrix(cells.data.updated(row, cells.data(row).updated(col, value))))
+        Life(cells.updated(row, col)(value))
     }
 
     def toggled(row: Int, col: Int): Life = {
-        if(cells(row, col) == true) updated(row, col, false)
-        else updated(row, col, true)
+        //if(cells(row, col) == true) updated(row, col, false)
+        //else updated(row, col, true)
+        updated(row, col, !apply(row, col))
     }
 
     def nbrOfNeighbours(row: Int, col: Int): Int = {

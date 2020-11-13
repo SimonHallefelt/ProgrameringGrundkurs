@@ -18,9 +18,9 @@ case class Text(source: String){
   lazy val followFreq: Map[String, Map[String, Int]] = {
     val resultat = scala.collection.mutable.Map.empty[String, FreqMapBuilder]
     for((key, next) <- bigrams){
-      if(key == resultat(key)){}
+      if(resultat.isDefinedAt(key)) {resultat(key).add(next)}
 
-      else {}
+      else {resultat += ((key, FreqMapBuilder(next)))}
 
     }
     resultat.map(p => p._1 -> p._2.toMap).toMap
