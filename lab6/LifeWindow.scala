@@ -37,7 +37,7 @@ class LifeWindow(rows: Int, cols: Int){
     def drawCell(row: Int, col: Int): Unit = {
         var a = Color.black
         if(life(row, col) == true){a = Color.pink} 
-        else{a = Color.black}
+        //else{a = Color.black}
         window.fill(row * blockSize + 1, col * blockSize + 1, blockSize - 1, blockSize - 1, a)
     }
 
