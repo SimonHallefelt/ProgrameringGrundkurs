@@ -5,6 +5,6 @@ data.head
 data.foreach(println)
 
 //a
-val populationOf: Map[String, Int]    = ???
+val populationOf: Map[String, Int]    = data.tail.map(p => p._1).Map
 val sizeOf:       Map[String, Int]    = ???
 val capitalOf:    Map[String, String] = ???
